@@ -1,10 +1,11 @@
 import React from 'react';
 import Modal from './Modal';
+// import { Link } from 'react-router';
 
 const LoginPopup = ({ isOpen, onClose }) => {
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
-            <h2 className="text-lg font-bold mb-4">Login</h2>
+            <h2 className="text-4xl font-bold mb-4 place-self-center">Login</h2>
             <form className="space-y-4">
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Email</label>
@@ -24,7 +25,8 @@ const LoginPopup = ({ isOpen, onClose }) => {
                 </div>
                 <button
                     type="submit"
-                    className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+                    className="w-full text-white py-2 rounded hover:bg-blue-600"
+                    style={{backgroundColor:"#03123a"}}
                 >
                     Log In
                 </button>
@@ -35,6 +37,7 @@ const LoginPopup = ({ isOpen, onClose }) => {
                     Register here
                 </a>
             </p>
+            
         </Modal>
     );
 };

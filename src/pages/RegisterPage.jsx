@@ -4,7 +4,7 @@ const RegisterPage = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="bg-white p-8 rounded shadow-lg w-96">
-                <h2 className="text-xl font-bold mb-6">Register</h2>
+                <h2 className="text-center text-xl font-bold mb-6">Register</h2>
                 <form className="space-y-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700">First Name</label>
@@ -38,6 +38,15 @@ const RegisterPage = () => {
                             placeholder="Enter your phone number"
                         />
                     </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Address</label>
+                        <input
+                            type="addr"
+                            className="w-full border border-gray-300 rounded px-3 py-2"
+                            placeholder="Enter your address"
+                        />
+                    </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700">Gender</label>
                         <select
@@ -46,7 +55,6 @@ const RegisterPage = () => {
                             <option value="">Select your gender</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
-                            <option value="other">Other</option>
                         </select>
                     </div>
                     <div>
