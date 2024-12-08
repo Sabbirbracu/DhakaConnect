@@ -1,0 +1,13 @@
+header {
+    background-color: #f3f4f6; /* Light Gray */
+}
+
+header nav ul li a {
+    font-size: 1rem;
+    text-decoration: none;
+    color: #374151; /* Gray */
+}
+
+header nav ul li a:hover {
+    color: #1d4ed8; /* Blue */
+}
