@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import Button from './button';
 import '../styles/Header.css';
 import LoginPopup from './LoginPopup';
@@ -8,32 +9,44 @@ const Header = () => {
 
     return (
         <header>
-            {/* Logo Section */}
-            <div className="Logo">
-                <img src="/logo.png" alt="logo" />
+            {/* section for the up section of Header */}
+            <div className='up-header'>
+                <h2>
+                    Invite Your Friends & Earn <span>Rewards!</span> Get a free ride for every successful referral.
+                </h2>
             </div>
 
-            {/* Menu Section */}
-            <nav>
-                <ul className="NavMenu_ul">
-                    <li><Link to="/" >Home</Link></li>
-                    <li><Link to="#" >Features</Link></li>
-                    <li><Link to="#" >Contact</Link></li>
-                </ul>
-            </nav>
+            {/* section of Header */}
+            <div className='header'>
+                
+                {/* Logo Section */}
+                <div className="Logo">
+                    <img src="/logo.png" alt="logo" />
+                </div>
 
-            {/* Button Section */}
-            <div>
-                <button
-                    onClick={() => setIsLoginOpen(true)} // Open the login modal
-                    
-                >
-                    Get Started
-                </button>
-            </div>
+                {/* Menu Section */}
+                <nav>
+                    <ul className="NavMenu_ul">
+                        <li><Link to="/" >Home</Link></li>
+                        <li><Link to="#" >Features</Link></li>
+                        <li><Link to="#" >Contact</Link></li>
+                    </ul>
+                </nav>
 
-            {/* Login Popup */}
-            <LoginPopup isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
+                {/* Button Section */}
+                <div className='button-div'>
+                    <button
+                        onClick={() => setIsLoginOpen(true)} // Open the login modal
+                        className='btn-primary '
+                    >
+                        Get Started
+                    </button>
+                </div>
+
+                {/* Login Popup */}
+                <LoginPopup isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
+                </div>
+            
         </header>
     );
 };

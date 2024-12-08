@@ -5,7 +5,7 @@ import '../styles/global.css';
 const Button = ({ text, onClick, className = '' }) => {
     return (
         <button
-            className={`btn-primary ${className}`}
+            className={`${className}`}
             onClick={onClick}
         >
             {text}

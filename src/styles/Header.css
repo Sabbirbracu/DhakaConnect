@@ -1,12 +1,12 @@
-header {
+.header {
     background-color: #f3f4f6; /* Light Gray */
     display: flex;
     flex-flow: row;
     justify-content: space-between;
-    padding: 4px 6px 4px 6px;
-    background-color: #03123a;
-    color: white;
+    background-color: #ffffff;
+    color: #2baa1a;
     margin: 0px;
+    border-bottom: 1px solid #03123a;
 }
 nav{
     width: 300px;
@@ -19,15 +19,20 @@ nav{
     justify-content: space-between;
 }
 
-header nav ul li a{
+.header nav ul li a{
     font-size: 1rem;
     text-decoration: none;
-    color: #ffffff;
+    color: #03123a;
     font-weight: 600;
 }
 
-header nav ul li a:hover {
+.header nav ul li a:hover {
     color: #2baa1a; /* Blue */
+}
+
+.header .button-div{
+    align-self: center;
+    width: 150px;
 }
 
 
@@ -35,8 +40,24 @@ header nav ul li a:hover {
     width: 100px;
     margin-top: -11px;
     padding: 0px;
-    margin-bottom: -10px;
+    margin-bottom: -16px;
     margin-left: 10px;
 }
 
+header .up-header{
+    background-color: #03123a;
+}
 
+header .up-header h2{
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    font-weight: 400;
+    margin: 0;
+    padding: 12px 0px 12px 0px;
+}
+
+header .up-header h2 span{
+    color: yellow;
+    font-weight: 600;
+}
