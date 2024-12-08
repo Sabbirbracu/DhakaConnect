@@ -1,13 +1,42 @@
 header {
     background-color: #f3f4f6; /* Light Gray */
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    padding: 4px 6px 4px 6px;
+    background-color: #03123a;
+    color: white;
+    margin: 0px;
+}
+nav{
+    width: 300px;
+    align-self: center;
 }
 
-header nav ul li a {
+.NavMenu_ul{
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+header nav ul li a{
     font-size: 1rem;
     text-decoration: none;
-    color: #374151; /* Gray */
+    color: #ffffff;
+    font-weight: 600;
 }
 
 header nav ul li a:hover {
-    color: #1d4ed8; /* Blue */
+    color: #2baa1a; /* Blue */
 }
+
+
+.Logo img{
+    width: 100px;
+    margin-top: -11px;
+    padding: 0px;
+    margin-bottom: -10px;
+    margin-left: 10px;
+}
+
+

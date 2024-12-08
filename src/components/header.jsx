@@ -1,28 +1,39 @@
-import React from 'react';
-import Button from '/Users/sabbirahmad/Desktop/DhakaConnect/src/components/Button';
+import React, { useState } from 'react';
+import Button from './button';
 import '../styles/Header.css';
-
+import LoginPopup from './LoginPopup';
+import { Link } from 'react-router';
 const Header = () => {
+    const [isLoginOpen, setIsLoginOpen] = useState(false); // State to control the login modal
+
     return (
-        <header className="flex justify-between items-center px-6 py-4 bg-gray-100 shadow-md">
+        <header>
             {/* Logo Section */}
-            <div className="text-xl font-bold">
-                MyApp
+            <div className="Logo">
+                <img src="/logo.png" alt="logo" />
             </div>
 
             {/* Menu Section */}
             <nav>
-                <ul className="flex space-x-4">
-                    <li><a href="#" className="hover:text-blue-500">Home</a></li>
-                    <li><a href="#" className="hover:text-blue-500">Features</a></li>
-                    <li><a href="#" className="hover:text-blue-500">Contact</a></li>
+                <ul className="NavMenu_ul">
+                    <li><Link to="/" >Home</Link></li>
+                    <li><Link to="#" >Features</Link></li>
+                    <li><Link to="#" >Contact</Link></li>
                 </ul>
             </nav>
 
             {/* Button Section */}
             <div>
-                <Button text="Sign Up" className='btn-primary' />
+                <button
+                    onClick={() => setIsLoginOpen(true)} // Open the login modal
+                    
+                >
+                    Get Started
+                </button>
             </div>
+
+            {/* Login Popup */}
+            <LoginPopup isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
         </header>
     );
 };
