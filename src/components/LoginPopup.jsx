@@ -5,6 +5,7 @@ import Modal from './Modal';
 const LoginPopup = ({ isOpen, onClose }) => {
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
+            <div className='bg-white rounded-lg shadow-lg p-6 w-96'>
             <h2 className="text-4xl font-bold mb-4 place-self-center">Login</h2>
             <form className="space-y-4">
                 <div>
@@ -37,6 +38,8 @@ const LoginPopup = ({ isOpen, onClose }) => {
                     Register here
                 </a>
             </p>
+            </div>
+            
             
         </Modal>
     );
