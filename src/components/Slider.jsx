@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import '/Users/sabbirahmad/Desktop/DhakaConnect/src/index.css'
 
 const Slider = ({ slides, headingPosition, paraPosition, buttonPosition, containerStyles, style }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -8,7 +9,7 @@ const Slider = ({ slides, headingPosition, paraPosition, buttonPosition, contain
         if (slides.length > 1) {
             const interval = setInterval(() => {
                 setCurrentSlide((prev) => (prev + 1) % slides.length);
-            }, 5000); // Change every 5 seconds
+            }, 3000); // Change every 5 seconds
             return () => clearInterval(interval); // Cleanup on unmount
         }
     }, [slides]);
@@ -18,7 +19,7 @@ const Slider = ({ slides, headingPosition, paraPosition, buttonPosition, contain
     }
 
     return (
-        <div className={`w-full overflow-hidden ${containerStyles}`} style={style}>
+        <div className={`slider-section w-full overflow-hidden ${containerStyles}`} style={style}>
             {/* Render slides */}
             {slides.map((slide, index) => (
                 <div
@@ -37,15 +38,15 @@ const Slider = ({ slides, headingPosition, paraPosition, buttonPosition, contain
 
                     {/* Heading */}
                     <div
-                        className="absolute text-center text-white"
+                        className="slider-heading absolute w-80 text-white "
                         style={{ ...headingPosition }}
                     >
-                        <h1 className="text-4xl md:text-6xl font-bold">{slide.heading}</h1>
+                        <h1 className="text-4xl md:text-6xl font-bold subpixel-antialiased">{slide.heading}</h1>
                     </div>
 
                     {/* Paragraph */}
                     <div
-                        className="absolute text-center text-white"
+                        className="slider-para absolute w-72 text-white"
                         style={{ ...paraPosition }}
                     >
                         <p className="text-lg md:text-xl">{slide.paragraph}</p>
@@ -54,10 +55,10 @@ const Slider = ({ slides, headingPosition, paraPosition, buttonPosition, contain
                     {/* Button */}
                     {slide.buttonText && (
                         <div
-                            className="absolute"
+                            className="slider-button absolute"
                             style={{ ...buttonPosition }}
                         >
-                            <button className="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600">
+                            <button className="px-6 py-3 font-extrabold bg-green-500 text-white rounded-md hover:bg-blue-600">
                                 {slide.buttonText}
                             </button>
                         </div>

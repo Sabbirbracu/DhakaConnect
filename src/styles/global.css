@@ -1,8 +1,7 @@
 .btn-primary {
     padding: 0.5rem 1rem;
-    background-color: #2baa1a; /* Blue */
+    /* background-color: #2baa1a; Blue */
     color: white;
-    border-radius: 11px;
     transition: background-color 0.3s;
 }
 
