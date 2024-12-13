@@ -6,18 +6,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Hash; // Import the Hash facade
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
-    protected $guarded = [];
+    protected $fillable = [
+        'fname',
+        'lname',
+        'phone',
+        'email',
+        'password',
+        'gender',
+        'login_code'
+    ];
+    
 
     /**
      * The attributes that should be hidden for serialization.
@@ -25,20 +35,42 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'login_code',
+        'password',
         'remember_token',
     ];
-    public function routeNotificationForTwilio(){
+
+    /**
+     * Boot method to handle model events.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            if (isset($user->password)) {
+                $user->password = Hash::make($user->password);
+            }
+        });
+
+        static::updating(function ($user) {
+            if ($user->isDirty('password')) {
+                $user->password = Hash::make($user->password);
+            }
+        });
+    }
+
+    public function routeNotificationForTwilio()
+    {
         return $this->phone;
     }
 
-    public function driver(){
+    public function driver()
+    {
         return $this->hasOne(Driver::class);
     }
 
-    public function trips(){
+    public function trips()
+    {
         return $this->hasMany(Trip::class);
     }
-
-
 }
