@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\TripController;
+use App\Http\Controllers\RouteController;
+Route::post('/shortest-route', [RouteController::class, 'getShortestRoute']);
+
+
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
