@@ -114,6 +114,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
 import Dashboard from './pages/Dashboard';
+import RoutePage from '/Users/sabbirahmad/Desktop/DhakaConnect/src/pages/Routepage.jsx'; // Import the new RoutePage
 import Header from './components/Header'; // Ensure Header is imported
 
 const App = () => {
@@ -188,9 +189,16 @@ const App = () => {
                         )
                     }
                 />
+                <Route
+                    path="/routes"
+                    element={
+                        isLoggedIn ? <RoutePage /> : <Navigate to="/" />
+                    }
+                />
             </Routes>
         </Router>
     );
 };
 
 export default App;
+
