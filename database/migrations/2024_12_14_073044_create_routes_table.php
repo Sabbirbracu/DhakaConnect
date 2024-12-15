@@ -1,9 +1,7 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
 return new class extends Migration
 {
     /**
@@ -21,11 +19,9 @@ return new class extends Migration
             $table->timestamps();
         
             $table->foreign('start_location_id')->references('id')->on('locations');
-            $table->foreign('end_location_id')->references('id')->on('locations');
-            
+            $table->foreign('end_location_id')->references('id')->on('locations');      
         });
     }
-
     /**
      * Reverse the migrations.
      */
