@@ -115,7 +115,7 @@ import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
 import Dashboard from './pages/Dashboard';
 import RoutePage from '/Users/sabbirahmad/Desktop/DhakaConnect/src/pages/Routepage.jsx'; // Import the new RoutePage
-import Header from './components/Header'; // Ensure Header is imported
+import Header from '/Users/sabbirahmad/Desktop/DhakaConnect/src/components/header'; // Ensure Header is imported
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(

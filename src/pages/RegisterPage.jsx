@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Header from '../components/Header';
+import Header from '/Users/sabbirahmad/Desktop/DhakaConnect/src/components/header';
 
 const RegisterPage = () => {
   const [fname, setFname] = useState('');
