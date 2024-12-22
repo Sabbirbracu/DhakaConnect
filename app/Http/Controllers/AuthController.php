@@ -39,6 +39,20 @@ class AuthController extends Controller
         ], 201);
     }
 
+    public function getAllUsers()
+    {
+        // Fetch all users from the database
+        $users = User::all();
+
+        // Return response as JSON
+        return response()->json([
+            'message' => 'Users retrieved successfully',
+            'data'    => $users
+        ], 200);
+    }
+
+
+
     public function login(Request $request)
     {
         try{

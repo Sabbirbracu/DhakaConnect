@@ -9,6 +9,8 @@ use App\Http\Controllers\RouteController;
 // Public Routes
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/user-data', [AuthController::class, 'getAllUsers']);
+
 
 // Test routes (public for now)
 Route::post('/direct-buses', [RouteController::class, 'getDirectBuses']);

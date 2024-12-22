@@ -558,21 +558,18 @@ class RouteController extends Controller
     public function getDirectBuses(Request $request)
     {
         set_time_limit(300);
-
         $startName = 'Mirpur 10'; // Fixed starting location
         $endName = $request->input('destination'); // User-provided destination
 
         if (!$endName) {
             return response()->json(['error' => 'Destination not provided'], 400);
         }
-
         $startLocation = Location::where('name', $startName)->first();
         $endLocation = Location::where('name', $endName)->first();
 
         if (!$startLocation || !$endLocation) {
             return response()->json(['error' => 'Start or destination not found in the database'], 404);
         }
-
         // Build a graph from route data
         $graph = $this->buildGraph();
 
@@ -582,7 +579,6 @@ class RouteController extends Controller
         if (!$path) {
             return response()->json(['message' => 'No direct buses found.']);
         }
-
         // Retrieve route details from the database
         $routeDetails = [];
         $totalDistance = 0;
