@@ -1,9 +1,8 @@
+import { X } from 'lucide-react';
 import React, { useState } from 'react';
-import Button from './button';
+import { Link } from 'react-router';
 import '../styles/Header.css';
 import LoginPopup from './LoginPopup';
-import { Link } from 'react-router';
-import { X } from 'lucide-react';
 
 const Header = ({ isLoggedIn, setIsLoggedIn, userInfo }) => {
     const [isLoginOpen, setIsLoginOpen] = useState(false); // State to control the login modal

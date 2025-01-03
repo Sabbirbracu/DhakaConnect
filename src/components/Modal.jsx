@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import '../styles/global.css';
 // It is lucide icon for close icon
 import { X } from 'lucide-react';

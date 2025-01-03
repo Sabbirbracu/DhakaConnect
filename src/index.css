@@ -2,13 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @media only screen and (min-width: 768px) {
-    .slider-heading {
-      width:600px;
-    }
-    .slider-para{
-        width: 350px;
-        margin-top: 20px;
-    }
+  .slider-heading {
+    width: 600px;
   }
+  .slider-para {
+    width: 350px;
+    margin-top: 20px;
+  }
+}

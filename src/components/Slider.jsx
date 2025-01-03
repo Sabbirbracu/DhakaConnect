@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import '/Users/sabbirahmad/Desktop/DhakaConnect/src/index.css'
+import React, { useEffect, useState } from 'react';
+import '/Users/sabbirahmad/Desktop/DhakaConnect/src/index.css';
 
 const Slider = ({ slides, headingPosition, paraPosition, buttonPosition, containerStyles, style }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -9,7 +9,7 @@ const Slider = ({ slides, headingPosition, paraPosition, buttonPosition, contain
         if (slides.length > 1) {
             const interval = setInterval(() => {
                 setCurrentSlide((prev) => (prev + 1) % slides.length);
-            }, 3000); // Change every 5 seconds
+            }, 3000); // Change every 3 seconds
             return () => clearInterval(interval); // Cleanup on unmount
         }
     }, [slides]);
@@ -38,7 +38,7 @@ const Slider = ({ slides, headingPosition, paraPosition, buttonPosition, contain
 
                     {/* Heading */}
                     <div
-                        className="slider-heading absolute w-80 text-white "
+                        className="slider-heading absolute w-80 text-white"
                         style={{ ...headingPosition }}
                     >
                         <h1 className="text-4xl md:text-6xl font-bold subpixel-antialiased">{slide.heading}</h1>
@@ -58,7 +58,10 @@ const Slider = ({ slides, headingPosition, paraPosition, buttonPosition, contain
                             className="slider-button absolute"
                             style={{ ...buttonPosition }}
                         >
-                            <button className="px-6 py-3 font-extrabold bg-green-500 text-white rounded-md hover:bg-blue-600">
+                            <button
+                                className="px-6 py-3 font-extrabold bg-green-500 text-white rounded-md hover:bg-blue-600"
+                                onClick={slide.onClick} // Add onClick handler here
+                            >
                                 {slide.buttonText}
                             </button>
                         </div>

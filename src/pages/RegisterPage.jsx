@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Header from '/Users/sabbirahmad/Desktop/DhakaConnect/src/components/header';
 
 const RegisterPage = () => {
   const [fname, setFname] = useState('');
@@ -9,9 +8,8 @@ const RegisterPage = () => {
   const [gender, setGender] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
-
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false); // New state for successful registration
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
 
@@ -20,7 +18,7 @@ const RegisterPage = () => {
     setLoading(true);
     setError('');
     setMessage('');
-    setSuccess(false); // Reset success state on new submission
+    setSuccess(false);
 
     if (!fname || !lname || !email || !phone || !gender || !password || !passwordConfirmation) {
       setError('Please fill out all fields');
@@ -58,7 +56,7 @@ const RegisterPage = () => {
         setPassword('');
         setPasswordConfirmation('');
         localStorage.setItem('auth_token', data.token);
-        setSuccess(true); // Set success to true
+        setSuccess(true);
       } else {
         const errorMessage = data.errors
           ? Object.values(data.errors).flat().join(', ')
@@ -68,18 +66,18 @@ const RegisterPage = () => {
     } catch (err) {
       setError('Server error. Please try again later.');
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-    
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 border">
       <div className="bg-white p-8 rounded shadow-lg w-96">
         <h2 className="text-center text-xl font-bold mb-6">Register</h2>
         {error && <div className="bg-red-100 text-red-700 p-2 mb-4 rounded">{error}</div>}
         {message && <div className="bg-green-100 text-green-700 p-2 mb-4 rounded">{message}</div>}
         <form className="space-y-4" onSubmit={handleSubmit}>
+          {/* Form Inputs */}
           <div>
             <label className="block text-sm font-medium text-gray-700">First Name</label>
             <input
@@ -90,7 +88,6 @@ const RegisterPage = () => {
               onChange={(e) => setFname(e.target.value)}
             />
           </div>
-
           <div>
             <label className="block text-sm font-medium text-gray-700">Last Name</label>
             <input
@@ -101,7 +98,6 @@ const RegisterPage = () => {
               onChange={(e) => setLname(e.target.value)}
             />
           </div>
-
           <div>
             <label className="block text-sm font-medium text-gray-700">Email</label>
             <input
@@ -112,7 +108,6 @@ const RegisterPage = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-
           <div>
             <label className="block text-sm font-medium text-gray-700">Phone</label>
             <input
@@ -123,7 +118,6 @@ const RegisterPage = () => {
               onChange={(e) => setPhone(e.target.value)}
             />
           </div>
-
           <div>
             <label className="block text-sm font-medium text-gray-700">Gender</label>
             <select
@@ -137,7 +131,6 @@ const RegisterPage = () => {
               <option value="other">Other</option>
             </select>
           </div>
-
           <div>
             <label className="block text-sm font-medium text-gray-700">Password</label>
             <input
@@ -148,7 +141,6 @@ const RegisterPage = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-
           <div>
             <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
             <input
@@ -159,7 +151,6 @@ const RegisterPage = () => {
               onChange={(e) => setPasswordConfirmation(e.target.value)}
             />
           </div>
-
           <button
             type="submit"
             className={`w-full py-2 rounded transition ${
@@ -172,7 +163,6 @@ const RegisterPage = () => {
         </form>
       </div>
     </div>
-    
   );
 };
 

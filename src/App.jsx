@@ -1,121 +1,12 @@
-// import React, { useState } from 'react';
-// import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-// import HomePage from './pages/HomePage';
-// import RegisterPage from './pages/RegisterPage';
-// import Dashboard from './pages/Dashboard';
-// import Header from './components/Header'; // Import Header here
-// import '/Users/sabbirahmad/Desktop/DhakaConnect/src/App.css';
-
-// const App = () => {
-//     const [isLoggedIn, setIsLoggedIn] = useState(
-//         localStorage.getItem('auth_token') ? true : false // Check if token exists
-//     );
-
-//     // Protected Route Component
-//     const ProtectedRoute = ({ children }) => {
-//         return isLoggedIn ? children : <Navigate to="/" />; // Redirect to home if not logged in
-//     };
-
-//     const handleLogout = () => {
-//         localStorage.removeItem('auth_token'); // Clear auth token
-//         setIsLoggedIn(false); // Update login state
-//     };
-
-//     return (
-//         <Router>
-//             <Header setIsLoggedIn={setIsLoggedIn} /> 
-//             <Routes>
-//                 {/* Public Routes */}
-//                 <Route
-//                     path="/"
-//                     element={<HomePage setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />}
-//                 />
-//                 <Route path="/register" element={<RegisterPage />} />
-
-//                 {/* Protected Routes */}
-//                 <Route
-//                     path="/dashboard"
-//                     element={
-//                         <ProtectedRoute>
-//                             <Dashboard onLogout={handleLogout} />
-//                         </ProtectedRoute>
-//                     }
-//                 />
-//             </Routes>
-//         </Router>
-//     );
-// };
-
-// export default App;
-
-
-// import React, { useState, useEffect } from 'react';
-// import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-// import HomePage from './pages/HomePage';
-// import RegisterPage from './pages/RegisterPage';
-// import Dashboard from './pages/Dashboard';
-// import Header from './components/Header';
-// import '/Users/sabbirahmad/Desktop/DhakaConnect/src/App.css';
-
-// const App = () => {
-//     const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('auth_token') ? true : false);
-//     const [userInfo, setUserInfo] = useState(null); // To store user data
-
-//     useEffect(() => {
-//         if (isLoggedIn) {
-//             // Fetch user info if logged in
-//             fetch('http://127.0.0.1:8000/api/user', {
-//                 headers: {
-//                     Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
-//                 },
-//             })
-//                 .then((res) => res.json())
-//                 .then((data) => setUserInfo(data))
-//                 .catch((err) => console.error(err));
-//         }
-//     }, [isLoggedIn]);
-
-//     const handleLogout = () => {
-//         localStorage.removeItem('auth_token'); // Remove token
-//         setIsLoggedIn(false);
-//         setUserInfo(null); // Clear user info
-//     };
-
-//     return (
-//         <Router>
-//             <Header
-//                 isLoggedIn={isLoggedIn}
-//                 setIsLoggedIn={setIsLoggedIn}
-//                 userInfo={userInfo}
-//             />
-//             <Routes>
-//                 <Route path="/" element={<HomePage />} />
-//                 <Route path="/register" element={<RegisterPage />} />
-//                 <Route
-//                     path="/dashboard"
-//                     element={
-//                         isLoggedIn ? (
-//                             <Dashboard onLogout={handleLogout} />
-//                         ) : (
-//                             <Navigate to="/" />
-//                         )
-//                     }
-//                 />
-//             </Routes>
-//         </Router>
-//     );
-// };
-
-// export default App;
-
-
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import Dashboard from './pages/Dashboard';
+import DriverRegistrationPage from './pages/DriverRegistrationPage'; // Import the new DriverRegistrationPage
 import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
-import Dashboard from './pages/Dashboard';
-import RoutePage from '/Users/sabbirahmad/Desktop/DhakaConnect/src/pages/Routepage.jsx'; // Import the new RoutePage
 import Header from '/Users/sabbirahmad/Desktop/DhakaConnect/src/components/header'; // Ensure Header is imported
+import RoutePage from '/Users/sabbirahmad/Desktop/DhakaConnect/src/pages/Routepage.jsx'; // Import the new RoutePage
+import DriverDashboard from './pages/DriverDashboard'; // Adjust the path if needed
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(
@@ -153,7 +44,7 @@ const App = () => {
     // Auto Logout when token expires
     useEffect(() => {
         if (isLoggedIn) {
-            const tokenExpirationTime = 5 * 60 * 1000; // 5 minutes in milliseconds
+            const tokenExpirationTime = 60 * 60 * 1000; // 60 minutes in milliseconds
             const logoutTimer = setTimeout(() => {
                 handleLogout(); // Log out the user when session expires
                 alert('Your session has expired. Please log in again.');
@@ -177,12 +68,13 @@ const App = () => {
                     element={<HomePage setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />}
                 />
                 <Route path="/register" element={<RegisterPage />} />
+                <Route path="/register-driver" element={<DriverRegistrationPage setIsLoggedIn={setIsLoggedIn} />} />
 
                 {/* Protected Routes */}
                 <Route
                     path="/dashboard"
                     element={
-                        isLoggedIn ? (
+                        isLoggedIn && userInfo?.role === 'user' ? (
                             <Dashboard onLogout={handleLogout} userInfo={userInfo} />
                         ) : (
                             <Navigate to="/" />
@@ -195,10 +87,19 @@ const App = () => {
                         isLoggedIn ? <RoutePage /> : <Navigate to="/" />
                     }
                 />
+                <Route
+                    path="/driver-dashboard"
+                    element={
+                        isLoggedIn && userInfo?.role === 'driver' ? (
+                            <DriverDashboard />
+                        ) : (
+                            <Navigate to="/" />
+                        )
+                    }
+                />
             </Routes>
         </Router>
     );
 };
 
 export default App;
-
