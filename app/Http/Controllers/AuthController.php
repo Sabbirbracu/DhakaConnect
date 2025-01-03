@@ -8,6 +8,7 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    // Registration with role
     public function register(Request $request)
     {
         $request->validate([
@@ -16,20 +17,20 @@ class AuthController extends Controller
             'email'     => 'required|email|unique:users,email',
             'password'  => 'required|min:8|confirmed',
             'gender'    => 'required|string',
-            'phone'     => 'required|numeric|unique:users,phone', // if you want to validate phone
+            'phone'     => 'required|numeric|unique:users,phone',
+            'role'      => 'nullable|string|in:user,driver' // Validate role
         ]);
-        
 
         $user = User::create([
             'fname'     => $request->fname,
             'lname'     => $request->lname,
             'phone'     => $request->phone,
             'email'     => $request->email,
-            'password'  => $request->password, // hashing done automatically in model or you can Hash::make here
+            'password'  => Hash::make($request->password), // Ensure password is hashed
             'gender'    => $request->gender,
+            'role'      => $request->role ?? 'user' // Default role is user
         ]);
 
-        // Generate a Sanctum token
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
@@ -39,48 +40,68 @@ class AuthController extends Controller
         ], 201);
     }
 
+    // Get all users (optional)
     public function getAllUsers()
     {
-        // Fetch all users from the database
         $users = User::all();
 
-        // Return response as JSON
         return response()->json([
             'message' => 'Users retrieved successfully',
-            'data'    => $users
+            'data'    => $users,
         ], 200);
     }
 
-
-
+    // Login with role
     public function login(Request $request)
     {
-        try{
+        try {
             $request->validate([
                 'email'    => 'required|email',
                 'password' => 'required',
             ]);
-    
+
             $user = User::where('email', $request->email)->first();
-    
-            if (!$user || !Hash::check($request->password, $user->password)) {
-                throw ValidationException::withMessages([
-                    'email' => ['The provided credentials are incorrect.'],
-                ]);
+
+            if (!$user) {
+                return response()->json([
+                    'message' => 'User with this email does not exist.',
+                ], 404);
             }
-    
+
+            \Log::info('Hashed Password from DB: ' . $user->password);
+            \Log::info('Plain Password: ' . $request->password);
+            \Log::info('Hash Check Result: ' . (Hash::check($request->password, $user->password) ? 'true' : 'false'));
+
+            if (!Hash::check($request->password, $user->password)) {
+                return response()->json([
+                    'message' => 'Incorrect password. Please try again.',
+                ], 401);
+            }
+
             $token = $user->createToken('auth_token')->plainTextToken;
-    
+
             return response()->json([
                 'message' => 'Logged in successfully',
-                'user'    => $user,
+                'user'    => [
+                    'id'    => $user->id,
+                    'email' => $user->email,
+                    'name'  => $user->fname . ' ' . $user->lname,
+                    'role'  => $user->role, // Include role in response
+                ],
                 'token'   => $token,
-            ]);
-        } catch (\Exception $e) {
+            ], 200);
+        } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
-                'message' => 'Something went wrong',
+                'message' => 'Validation error',
+                'errors'  => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            // Log the exception for debugging
+            \Log::error('Login Error: ' . $e->getMessage());
+
+            return response()->json([
+                'message' => 'An error occurred while processing your request. Please try again later.',
             ], 500);
         }
-        
     }
 }

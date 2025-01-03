@@ -10,6 +10,21 @@ use App\Http\Controllers\RouteController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/user-data', [AuthController::class, 'getAllUsers']);
+Route::post('/register-driver', [DriverController::class, 'registerDriver']);
+
+Route::post('/test-password', function (Request $request) {
+    $user = App\Models\User::where('email', $request->email)->first();
+
+    if (!$user) {
+        return response()->json(['message' => 'User not found'], 404);
+    }
+
+    if (Hash::check($request->password, $user->password)) {
+        return response()->json(['message' => 'Password matches']);
+    } else {
+        return response()->json(['message' => 'Incorrect password'], 401);
+    }
+});
 
 
 // Test routes (public for now)

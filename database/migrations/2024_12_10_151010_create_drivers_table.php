@@ -14,12 +14,18 @@ return new class extends Migration
     {
         Schema::create('drivers', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class);
-            $table->integer('year');
-            $table->string('make');
-            $table->string('model');
-            $table->string('color');
-            $table->string('license_plate');
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
+            $table->string('nid')->unique(); // National ID
+            $table->string('driving_license')->unique(); // Driving License
+            $table->enum('blood_group', ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']);
+            $table->enum('dop_test', ['positive', 'negative']);
+            $table->enum('vehicle_type', ['car', 'CNG']); // Type of vehicle
+            $table->string('vehicle_number')->unique(); // Add this line
+            $table->integer('year'); // Vehicle year
+            $table->string('make'); // Vehicle make
+            $table->string('model'); // Vehicle model
+            $table->string('color'); // Vehicle color
+            $table->string('license_plate')->unique(); // Vehicle license plate
             $table->timestamps();
         });
     }
