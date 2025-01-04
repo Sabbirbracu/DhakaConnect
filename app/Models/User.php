@@ -134,4 +134,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Trip::class);
     }
+
+    
+    public function rideRequests()
+{
+    return $this->hasMany(RideRequest::class);
+}
+
 }
