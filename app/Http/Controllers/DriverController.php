@@ -84,7 +84,7 @@ class DriverController extends Controller
             'email' => $request->email,
             'gender' => $request->gender,
             'address' => $request->address,
-            'password' => Hash::make($request->password),
+            'password' => $request->password,
             'role' => 'driver',
         ]);
 

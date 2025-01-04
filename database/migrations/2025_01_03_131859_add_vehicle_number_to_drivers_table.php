@@ -9,20 +9,22 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
+    public function up()
+{
+    if (!Schema::hasColumn('drivers', 'vehicle_number')) {
         Schema::table('drivers', function (Blueprint $table) {
-            $table->string('vehicle_number')->unique()->after('dop_test'); // Add column
+            $table->string('vehicle_number')->after('dop_test');
         });
     }
+}
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
+public function down()
+{
+    if (Schema::hasColumn('drivers', 'vehicle_number')) {
         Schema::table('drivers', function (Blueprint $table) {
             $table->dropColumn('vehicle_number');
         });
     }
+}
+
 };

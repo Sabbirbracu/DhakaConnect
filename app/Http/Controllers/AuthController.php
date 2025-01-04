@@ -26,11 +26,12 @@ class AuthController extends Controller
             'lname'     => $request->lname,
             'phone'     => $request->phone,
             'email'     => $request->email,
-            'password'  => Hash::make($request->password), // Ensure password is hashed
+            'password'  => $request->password, // No hashing
             'gender'    => $request->gender,
-            'role'      => $request->role ?? 'user' // Default role is user
+            'role'      => $request->role ?? 'user'
         ]);
-
+        
+        
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
@@ -68,15 +69,12 @@ class AuthController extends Controller
                 ], 404);
             }
 
-            \Log::info('Hashed Password from DB: ' . $user->password);
-            \Log::info('Plain Password: ' . $request->password);
-            \Log::info('Hash Check Result: ' . (Hash::check($request->password, $user->password) ? 'true' : 'false'));
-
-            if (!Hash::check($request->password, $user->password)) {
+            if ($request->password !== $user->password) {
                 return response()->json([
                     'message' => 'Incorrect password. Please try again.',
                 ], 401);
             }
+            
 
             $token = $user->createToken('auth_token')->plainTextToken;
 

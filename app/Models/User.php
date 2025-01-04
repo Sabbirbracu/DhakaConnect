@@ -109,20 +109,20 @@ class User extends Authenticatable
     {
         parent::boot();
 
-        static::creating(function ($user) {
-            if (isset($user->password)) {
-                $user->password = Hash::make($user->password);
-            }
-            if (!isset($user->role)) {
-                $user->role = 'user'; // Default to 'user'
-            }
-        });
+        // static::creating(function ($user) {
+        //     if (isset($user->password)) {
+        //         $user->password = Hash::make($user->password);
+        //     }
+        //     if (!isset($user->role)) {
+        //         $user->role = 'user'; // Default to 'user'
+        //     }
+        // });
 
-        static::updating(function ($user) {
-            if ($user->isDirty('password')) {
-                $user->password = Hash::make($user->password);
-            }
-        });
+        // static::updating(function ($user) {
+        //     if ($user->isDirty('password')) {
+        //         $user->password = Hash::make($user->password);
+        //     }
+        // });
     }
 
     public function driver()
