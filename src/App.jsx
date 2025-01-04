@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
-import DriverRegistrationPage from './pages/DriverRegistrationPage'; // Import the new DriverRegistrationPage
+import DriverDashboard from './pages/DriverDashboard';
+import DriverRegistrationPage from './pages/DriverRegistrationPage';
 import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
-import Header from '/Users/sabbirahmad/Desktop/DhakaConnect/src/components/header'; // Ensure Header is imported
-import RoutePage from '/Users/sabbirahmad/Desktop/DhakaConnect/src/pages/Routepage.jsx'; // Import the new RoutePage
-import DriverDashboard from './pages/DriverDashboard'; // Adjust the path if needed
+import Header from '/Users/sabbirahmad/Desktop/DhakaConnect/src/components/header';
+import RoutePage from '/Users/sabbirahmad/Desktop/DhakaConnect/src/pages/Routepage.jsx';
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(
         localStorage.getItem('auth_token') ? true : false
     );
-    const [userInfo, setUserInfo] = useState(null); // To store user-specific information
-
+    const [userInfo, setUserInfo] = useState(null); 
     const handleLogout = () => {
         localStorage.removeItem('auth_token'); // Remove the token
         setIsLoggedIn(false); // Update login state
@@ -36,7 +35,16 @@ const App = () => {
                         throw new Error('Session expired or invalid token');
                     }
                 })
-                .then((data) => setUserInfo(data))
+                .then((data) => {
+                    console.log('Fetched user data:', data);
+                    if (data.user) {
+                        setUserInfo(data.user);
+                        console.log('User Info Set:', data.user);
+                    } else {
+                        console.error('User data not found in response:', data);
+                        setUserInfo(null);
+                    }
+                })
                 .catch((err) => console.error(err));
         }
     }, [isLoggedIn]);
@@ -59,7 +67,7 @@ const App = () => {
             <Header
                 isLoggedIn={isLoggedIn}
                 setIsLoggedIn={setIsLoggedIn}
-                userInfo={userInfo} // Pass user info to Header
+                userInfo={userInfo}
             />
             <Routes>
                 {/* Public Routes */}
@@ -82,19 +90,19 @@ const App = () => {
                     }
                 />
                 <Route
-                    path="/routes"
-                    element={
-                        isLoggedIn ? <RoutePage /> : <Navigate to="/" />
-                    }
-                />
-                <Route
                     path="/driver-dashboard"
                     element={
                         isLoggedIn && userInfo?.role === 'driver' ? (
-                            <DriverDashboard />
+                            <DriverDashboard onLogout={handleLogout} />
                         ) : (
                             <Navigate to="/" />
                         )
+                    }
+                />
+                <Route
+                    path="/routes"
+                    element={
+                        isLoggedIn ? <RoutePage /> : <Navigate to="/" />
                     }
                 />
             </Routes>

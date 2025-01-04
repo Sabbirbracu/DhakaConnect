@@ -1,6 +1,6 @@
 import { X } from 'lucide-react';
 import React, { useState } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom'; // Corrected import
 import '../styles/Header.css';
 import LoginPopup from './LoginPopup';
 
