@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Dashboard = ({ onLogout }) => {
     const [user, setUser] = useState(null); // State to hold user data
@@ -83,12 +82,6 @@ const Dashboard = ({ onLogout }) => {
                     </p>
                 </div>
             )}
-            {/* <button
-                onClick={handleLogout}
-                className="bg-red-500 text-white px-4 py-2 rounded mb-6"
-            >
-                Logout
-            </button> */}
 
             {/* Feature 1 Section */}
             <div className="feature-section bg-blue-100 p-6 rounded shadow-md">
@@ -98,12 +91,6 @@ const Dashboard = ({ onLogout }) => {
                 <p className="text-blue-700 mb-4">
                     Find the most efficient and shortest routes for Dhaka city’s local buses.
                 </p>
-                {/* <button
-                    onClick={() => navigate('/routes')}
-                    className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600"
-                >
-                    See Routes for Local Bus
-                </button> */}
 
                 <button className="bg-blue-500 text-white px-4 py-2 rounded">
     <Link to="/routes">See Routes for Local Bus</Link>

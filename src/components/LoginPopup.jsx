@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Modal from './Modal';
 import { useNavigate } from 'react-router-dom';
+import Modal from './Modal';
 
 const LoginPopup = ({ isOpen, onClose, setIsLoggedIn }) => {
   const [email, setEmail] = useState('');
@@ -13,45 +13,44 @@ const LoginPopup = ({ isOpen, onClose, setIsLoggedIn }) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true);
     setError(''); // Reset previous errors
-  
+
     try {
-      // Send API request to the backend login endpoint
       const response = await fetch('http://127.0.0.1:8000/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
+          Accept: 'application/json',
         },
         body: JSON.stringify({
           email,
           password,
         }),
       });
-  
+
       const data = await response.json();
-      console.log('Response:', response); // Debug the response object
-      console.log('Data:', data); // Debug the data returned from the backend
-  
       if (response.ok) {
         // Login successful
-        console.log('Login successful');
-        localStorage.setItem('auth_token', data.token); // Save token to localStorage
+        localStorage.setItem('auth_token', data.token); // Save token
+        localStorage.setItem('user_role', data.user.role); // Save user role
         setIsLoggedIn(true); // Update login state
         onClose(); // Close the modal
-        navigate('/dashboard'); // Redirect to the dashboard or home page
+
+        // Redirect based on role
+        if (data.user.role === 'driver') {
+          navigate('/driver-dashboard');
+        } else {
+          navigate('/dashboard');
+        }
       } else {
         // Login failed
-        console.error('Login failed:', data);
         setError(data.message || 'Invalid email or password');
       }
     } catch (err) {
-      console.error('Error occurred during login:', err);
       setError('Something went wrong. Please try again later.');
     } finally {
       setLoading(false); // Stop the loading state
     }
   };
-  
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -63,7 +62,7 @@ const LoginPopup = ({ isOpen, onClose, setIsLoggedIn }) => {
             <input
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)} // Update email state
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full border border-gray-300 rounded px-3 py-2"
               placeholder="Enter your email"
               required
@@ -74,13 +73,13 @@ const LoginPopup = ({ isOpen, onClose, setIsLoggedIn }) => {
             <input
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)} // Update password state
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full border border-gray-300 rounded px-3 py-2"
               placeholder="Enter your password"
               required
             />
           </div>
-          {error && <p className="text-red-500 text-sm">{error}</p>} {/* Show error if any */}
+          {error && <p className="text-red-500 text-sm">{error}</p>}
           <button
             type="submit"
             className={`w-full text-white py-2 rounded hover:bg-blue-600 ${
@@ -91,12 +90,6 @@ const LoginPopup = ({ isOpen, onClose, setIsLoggedIn }) => {
             {loading ? 'Logging In...' : 'Log In'}
           </button>
         </form>
-        <p className="mt-4 text-sm text-gray-600">
-          Not have an account?{' '}
-          <a href="/register" className="text-blue-500 hover:underline">
-            Register here
-          </a>
-        </p>
       </div>
     </Modal>
   );

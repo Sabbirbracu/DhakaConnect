@@ -61,12 +61,12 @@ const DriverRegistrationPage = ({ setIsLoggedIn }) => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-  <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
-  <h1 className="text-2xl font-bold text-center mb-6">Driver Registration</h1>
-        {message && <div className="text-center mb-4 text-green-600 font-medium">{message}</div>}
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
+            <h1 className="text-2xl font-bold text-center mb-6">Driver Registration</h1>
+            {message && <div className="text-center mb-4 text-green-600 font-medium">{message}</div>}
+            <form onSubmit={handleSubmit} className="space-y-4">
       {/* Personal Details */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <input
           type="text"
           name="fname"
@@ -288,4 +288,3 @@ const DriverRegistrationPage = ({ setIsLoggedIn }) => {
 };
 
 export default DriverRegistrationPage;
-;
