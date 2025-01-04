@@ -114,6 +114,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
 import Dashboard from './pages/Dashboard';
+import DriverRegistrationPage from './pages/DriverRegistrationPage'; // Import the new DriverRegistrationPage
 import RoutePage from '/Users/sabbirahmad/Desktop/DhakaConnect/src/pages/Routepage.jsx'; // Import the new RoutePage
 import Header from '/Users/sabbirahmad/Desktop/DhakaConnect/src/components/header'; // Ensure Header is imported
 
@@ -145,7 +146,12 @@ const App = () => {
                         throw new Error('Session expired or invalid token');
                     }
                 })
-                .then((data) => setUserInfo(data))
+                .then((data) =>{
+                    console.log('Featched User Data:',data);
+                    if (data.user) {
+                        setUserInfo(data);
+                    }
+                })
                 .catch((err) => console.error(err));
         }
     }, [isLoggedIn]);
@@ -177,6 +183,7 @@ const App = () => {
                     element={<HomePage setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />}
                 />
                 <Route path="/register" element={<RegisterPage />} />
+                <Route path="/driver-register" element={<DriverRegistrationPage />} /> {/* New Route */}
 
                 {/* Protected Routes */}
                 <Route

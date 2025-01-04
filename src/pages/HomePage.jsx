@@ -1,16 +1,18 @@
 import React from 'react';
-import Header from '/Users/sabbirahmad/Desktop/DhakaConnect/src/components/header';
-import Slider from '../components/Slider'
-import '../styles/global.css'
+import { useNavigate } from 'react-router-dom';
+import Slider from '../components/Slider';
+import '../styles/global.css';
 import hero_photo from '/Users/sabbirahmad/Desktop/DhakaConnect/src/assets/hero_photo.jpg'; // Adjust the path based on your folder structure
 
 const HomePage = () => {
+    const navigate = useNavigate();
     const slides = [
         {
             image: hero_photo ,
             heading: 'Your Smart Guide to Dhaka City Commutes',
             paragraph: 'Find local bus routes, ride partners, and hassle-free solutions for your daily travel.',
-            buttonText: 'Explore Now',
+            buttonText: 'Be a Driver? Click Here',
+            onClick: () => navigate('/register-driver'),
         },
     ];
     return (
