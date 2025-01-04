@@ -83,12 +83,12 @@ const Dashboard = ({ onLogout }) => {
                     </p>
                 </div>
             )}
-            <button
+            {/* <button
                 onClick={handleLogout}
                 className="bg-red-500 text-white px-4 py-2 rounded mb-6"
             >
                 Logout
-            </button>
+            </button> */}
 
             {/* Feature 1 Section */}
             <div className="feature-section bg-blue-100 p-6 rounded shadow-md">

@@ -162,7 +162,7 @@ const RoutePage = () => {
             {/* Loading Spinner */}
             {loading && (
                 <div className="text-center mb-8">
-                    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-opacity-75"></div>
+                    <div className="justify-self-center animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-opacity-75"></div>
                     <p className="mt-2 text-gray-500">Fetching routes, please wait...</p>
                 </div>
             )}
