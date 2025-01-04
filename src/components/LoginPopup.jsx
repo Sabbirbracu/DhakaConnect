@@ -90,6 +90,12 @@ const LoginPopup = ({ isOpen, onClose, setIsLoggedIn }) => {
             {loading ? 'Logging In...' : 'Log In'}
           </button>
         </form>
+        <p className="mt-4 text-sm text-gray-600">
+           Not have an account?{' '}
+           <a href="/register" className="text-blue-500 hover:underline">
+             Register here
+           </a>
+         </p>
       </div>
     </Modal>
   );
