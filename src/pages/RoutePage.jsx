@@ -18,6 +18,13 @@ const RoutePage = () => {
         'Rampura Bridge',
     ];
 
+    const busImages = {
+        'Alif': '/Alif.webp',
+        'BusName2': '/assets/buses/BusName2.jpg',
+        'BusName3': '/assets/buses/BusName3.jpg',
+        // Add your bus names and corresponding images here
+    };
+
     const handleSearch = async () => {
         if (!destination) {
             alert('Please select a valid destination!');
@@ -88,12 +95,12 @@ const RoutePage = () => {
                     </h2>
 
                     {/* Route Cards */}
-                    <div className="flex items-center space-x-4 overflow-x-auto">
+                    <div className="flex flex-wrap items-center space-x-4 space-y-4 overflow-x-auto">
                         {directRoutes.map((route, idx) => (
                             <BusRouteCard
                                 key={idx}
                                 routeName={`${route.start} → ${route.end}`}
-                                image="/placeholder.jpg"
+                                image={busImages[route.bus_name] || '/Bus.jpg'} // Use bus image or default
                                 fare={`${route.fare} BDT`}
                             />
                         ))}
@@ -133,3 +140,4 @@ const RoutePage = () => {
 };
 
 export default RoutePage;
+
