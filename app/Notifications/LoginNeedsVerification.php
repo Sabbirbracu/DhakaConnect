@@ -1,26 +1,20 @@
 <?php
-
 namespace App\Notifications;
-
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\TwilioSmsMessage;
-
-
 class LoginNeedsVerification extends Notification
 {
     use Queueable;
-
-    /**
+   /**
      * Create a new notification instance.
      */
     public function __construct()
     {
         //
     }
-
     /**
      * Get the notification's delivery channels.
      *
@@ -30,7 +24,6 @@ class LoginNeedsVerification extends Notification
     {
         return [TwilioChannel::class];
     }
-
     public function toTwilio($notifiable){
         $loginCode=rand(111111,999999);
         $notifiable->update([
@@ -38,9 +31,7 @@ class LoginNeedsVerification extends Notification
         ]);
         return(new TwilioSmsMessage())
             ->content("Your DhakaConnect login code is {$loginCode}. Don't share this with anyone.");
-
     }
-
     /**
      * Get the array representation of the notification.
      *

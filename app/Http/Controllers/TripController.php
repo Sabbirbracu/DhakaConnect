@@ -54,7 +54,7 @@ class TripController extends Controller
 
         $trip->load('driver.user');
 
-        TripAccepted::dispatch($trip, $request->user());
+        TripAccepted::dispatch($trip, $trip->user);
 
         return $trip;
     }
@@ -98,7 +98,35 @@ class TripController extends Controller
 
         $trip->load('driver.user');
 
-        TripLocationUpdated::dispatch($trip, $request->user());
+        TripLocationUpdated::dispatch($trip, $trip->user);
         return $trip;
     }
+
+    public function createTrip(Request $request)
+    {
+        $request->validate([
+            'origin' => 'required|array',
+            'origin.lat' => 'required|numeric',
+            'origin.lng' => 'required|numeric',
+            'destination' => 'required|array',
+            'destination.lat' => 'required|numeric',
+            'destination.lng' => 'required|numeric',
+            'destination_name' => 'required|string|max:255',
+            'driver_id' => 'required|exists:drivers,id',
+        ]);
+    
+        $trip = Trip::create([
+            'start_lat' => $request->origin['lat'],
+            'start_lng' => $request->origin['lng'],
+            'destination_lat' => $request->destination['lat'],
+            'destination_lng' => $request->destination['lng'],
+            'destination_name' => $request->destination_name,
+            'driver_id' => $request->driver_id,
+            'status' => 'created',
+        ]);
+    
+        return response()->json($trip, 201);
+    }
+    
+
 }
