@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Http\Request;
@@ -5,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\RouteController;
+use App\Http\Controllers\RideRequestController; // Add RideRequestController
 
 // Public Routes
 Route::post('/register', [AuthController::class, 'register']);
@@ -26,7 +28,6 @@ Route::post('/test-password', function (Request $request) {
     }
 });
 
-
 // Test routes (public for now)
 Route::post('/direct-buses', [RouteController::class, 'getDirectBuses']);
 Route::post('/multi-bus-routes', [RouteController::class, 'getMultiBusRoutes']);
@@ -38,13 +39,21 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
-    // Other protected routes
-    Route::get('/driver', [DriverController::class, 'show']);
-    Route::post('/driver', [DriverController::class, 'update']);
+    // Driver-related routes
+    //Route::get('/driver', [DriverController::class, 'show']);
+    //Route::post('/driver', [DriverController::class, 'update']);
+    Route::get('/driver/{id}', [DriverController::class, 'show']);
+
+
+    // Trip-related routes
     Route::post('/trip', [TripController::class, 'store']);
     Route::get('/trip/{trip}', [TripController::class, 'show']);
     Route::post('/trip/{trip}/accept', [TripController::class, 'accept']);
     Route::post('/trip/{trip}/start', [TripController::class, 'start']);
     Route::post('/trip/{trip}/end', [TripController::class, 'end']);
     Route::post('/trip/{trip}/location', [TripController::class, 'location']);
+
+    // RideRequest routes
+    Route::post('/ride-requests', [RideRequestController::class, 'createRideRequest']);
+    Route::get('/ride-groups/{end_location_id}', [RideRequestController::class, 'getRideGroup']);
 });

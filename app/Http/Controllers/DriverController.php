@@ -106,4 +106,43 @@ class DriverController extends Controller
 
         return response()->json(['message' => 'Driver registered successfully'], 201);
     }
+
+    public function update(Request $request)
+    {
+        // Validate the input
+        $request->validate([
+            'driver_id' => 'required|exists:drivers,id',
+            'phone' => 'nullable|string|max:15|unique:drivers,phone',
+            'address' => 'nullable|string|max:255',
+            'blood_group' => 'nullable|in:A+,A-,B+,B-,AB+,AB-,O+,O-',
+        ]);
+
+        // Find the driver
+        $driver = Driver::find($request->driver_id);
+
+        // Update driver details
+        $driver->update($request->only('phone', 'address', 'blood_group'));
+
+        // Return a response
+        return response()->json([
+            'message' => 'Driver updated successfully',
+            'driver' => $driver,
+        ]);
+    }
+
+    public function show($id)
+    {
+        // Find the driver by ID
+        $driver = Driver::find($id);
+
+        // Check if driver exists
+        if (!$driver) {
+            return response()->json(['message' => 'Driver not found'], 404);
+        }
+
+        // Return driver details
+        return response()->json($driver, 200);
+    }
+
+
 }

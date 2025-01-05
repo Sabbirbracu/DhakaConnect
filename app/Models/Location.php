@@ -20,4 +20,10 @@ class Location extends Model
     {
         return $this->hasMany(Route::class, 'end_location_id');
     }
+
+    public function rideRequests()
+    {
+    return $this->hasMany(RideRequest::class, 'end_location_id');
+}
+
 }
