@@ -148,31 +148,151 @@
 
 // export default UserRide;
 
+// __________-workable-----------------
+
+// import React, { useState } from 'react';
+// import MapPage from './MapPage';
 
 
-import React, { useState } from 'react';
-import MapPage from './MapPage';
+
+// const UserRide = () => {
+//   const [destination, setDestination] = useState('');
+//   const [showMap, setShowMap] = useState(false);
+//   const [rideInfo, setRideInfo] = useState(null);
+
+//   const startLocation = { lat: 23.7808, lng: 90.4265 }; // Fixed: Merul Badda
+
+//   const destinations = [
+//     { name: 'Rampura Bridge', lat: 23.7689, lng: 90.4212 },
+//     { name: 'Mohakhali', lat: 23.7785, lng: 90.4000 },
+//     { name: 'Farmgate', lat: 23.7515, lng: 90.3910 },
+//     { name: 'Gulshan', lat: 23.8103, lng: 90.4125 },
+//     { name: 'Banani', lat: 23.7965, lng: 90.4049 },
+//   ];
+
+//   const handleRideRequest = () => {
+//     if (!destination) {
+//       alert('Please select a valid destination!');
+//       return;
+//     }
+
+//     const selectedDestination = destinations.find((d) => d.name === destination);
+
+//     const distance = Math.random() * (10 - 2) + 2; // Random distance between 2km and 10km
+//     const fare = distance * 20; // Assume 20 BDT per km
+//     const time = distance * 3; // Assume 3 minutes per km
+
+//     setRideInfo({
+//       pickup: 'Merul Badda', // Fixed pickup location
+//       destination: selectedDestination,
+//       distance: distance.toFixed(2),
+//       fare: fare.toFixed(2),
+//       time: `${Math.floor(time / 60)} hours ${Math.ceil(time % 60)} minutes`,
+//     });
+
+//     setShowMap(true); // Show map after requesting the ride
+//   };
+
+//   const handleConfirmRide = () => {
+//     alert('Ride confirmed! Have a safe journey.');
+//     setShowMap(false); // Reset the map view after confirming the ride
+//   };
+
+//   return (
+//     <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
+//       {showMap ? (
+//         <MapPage
+//           startLocation={startLocation}
+//           destination={rideInfo.destination}
+//           onConfirm={handleConfirmRide}
+//         />
+//       ) : (
+//         <>
+//           <h1 className="text-3xl font-bold text-blue-600 mb-6">Take a Ride</h1>
+
+//           {/* Destination Selector */}
+//           <div className="w-full max-w-md mb-6">
+//             <label htmlFor="destination" className="block text-lg font-medium mb-2">
+//               Choose Your Destination:
+//             </label>
+//             <select
+//               id="destination"
+//               value={destination}
+//               onChange={(e) => setDestination(e.target.value)}
+//               className="w-full border border-gray-300 rounded px-4 py-2"
+//             >
+//               <option value="">Select Destination</option>
+//               {destinations.map((d, idx) => (
+//                 <option key={idx} value={d.name}>
+//                   {d.name}
+//                 </option>
+//               ))}
+//             </select>
+//           </div>
+
+//           {/* Ride Request Button */}
+//           <button
+//             onClick={handleRideRequest}
+//             className="bg-green-500 text-white px-6 py-2 rounded font-bold hover:bg-green-600 mb-6"
+//           >
+//             Request Ride
+//           </button>
+
+//           {/* Ride Information */}
+//           {rideInfo && (
+//             <div className="bg-white shadow-md rounded p-6 w-full max-w-md">
+//               <h2 className="text-xl font-bold mb-4">Ride Details</h2>
+//               <p className="text-gray-700">
+//                 <strong>Pickup Location:</strong> {rideInfo.pickup}
+//               </p>
+//               <p className="text-gray-700">
+//                 <strong>Destination:</strong> {rideInfo.destination.name}
+//               </p>
+//               <p className="text-gray-700">
+//                 <strong>Distance:</strong> {rideInfo.distance} km
+//               </p>
+//               <p className="text-gray-700">
+//                 <strong>Fare:</strong> {rideInfo.fare} BDT
+//               </p>
+//               <p className="text-gray-700">
+//                 <strong>Estimated Time:</strong> {rideInfo.time}
+//               </p>
+//             </div>
+//           )}
+//         </>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default UserRide;
 
 
+// ----------
+
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import MapPage from "./MapPage";
 
 const UserRide = () => {
-  const [destination, setDestination] = useState('');
+  const [destination, setDestination] = useState("");
   const [showMap, setShowMap] = useState(false);
   const [rideInfo, setRideInfo] = useState(null);
+  const navigate = useNavigate();
 
   const startLocation = { lat: 23.7808, lng: 90.4265 }; // Fixed: Merul Badda
 
   const destinations = [
-    { name: 'Rampura Bridge', lat: 23.7689, lng: 90.4212 },
-    { name: 'Mohakhali', lat: 23.7785, lng: 90.4000 },
-    { name: 'Farmgate', lat: 23.7515, lng: 90.3910 },
-    { name: 'Gulshan', lat: 23.8103, lng: 90.4125 },
-    { name: 'Banani', lat: 23.7965, lng: 90.4049 },
+    { id: 1, name: "Rampura Bridge", lat: 23.7689, lng: 90.4212 },
+    { id: 2, name: "Mohakhali", lat: 23.7785, lng: 90.4000 },
+    { id: 3, name: "Farmgate", lat: 23.7515, lng: 90.3910 },
+    { id: 4, name: "Gulshan", lat: 23.8103, lng: 90.4125 },
+    { id: 5, name: "Banani", lat: 23.7965, lng: 90.4049 },
   ];
 
   const handleRideRequest = () => {
     if (!destination) {
-      alert('Please select a valid destination!');
+      alert("Please select a valid destination!");
       return;
     }
 
@@ -183,7 +303,7 @@ const UserRide = () => {
     const time = distance * 3; // Assume 3 minutes per km
 
     setRideInfo({
-      pickup: 'Merul Badda', // Fixed pickup location
+      pickup: "Merul Badda", // Fixed pickup location
       destination: selectedDestination,
       distance: distance.toFixed(2),
       fare: fare.toFixed(2),
@@ -194,8 +314,8 @@ const UserRide = () => {
   };
 
   const handleConfirmRide = () => {
-    alert('Ride confirmed! Have a safe journey.');
-    setShowMap(false); // Reset the map view after confirming the ride
+    // Redirect to ConfirmRide page with ride information
+    navigate("/confirm-ride", { state: { rideInfo } });
   };
 
   return (
