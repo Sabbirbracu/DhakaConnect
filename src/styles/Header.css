@@ -1,0 +1,63 @@
+.header {
+    background-color: #f3f4f6; /* Light Gray */
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    background-color: #ffffff;
+    color: #2baa1a;
+    margin: 0px;
+    border-bottom: 1px solid #03123a;
+}
+nav{
+    width: 300px;
+    align-self: center;
+}
+
+.NavMenu_ul{
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header nav ul li a{
+    font-size: 1rem;
+    text-decoration: none;
+    color: #03123a;
+    font-weight: 600;
+}
+
+.header nav ul li a:hover {
+    color: #2baa1a; /* Blue */
+}
+
+.header .button-div{
+    align-self: center;
+    width: 150px;
+}
+
+
+.Logo img{
+    width: 100px;
+    margin-top: -11px;
+    padding: 0px;
+    margin-bottom: -16px;
+    margin-left: 10px;
+}
+
+header .up-header{
+    background-color: #03123a;
+}
+
+header .up-header h2{
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    font-weight: 400;
+    margin: 0;
+    padding: 8px 0px 8px 0px;
+}
+
+header .up-header h2 span{
+    color: yellow;
+    font-weight: 600;
+}

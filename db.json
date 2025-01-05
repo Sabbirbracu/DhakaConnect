@@ -1,0 +1,7 @@
+{
+    "routes": [
+      { "id": 1, "start": "Brac University", "end": "Motijheel", "fare": 20 },
+      { "id": 2, "start": "Brac University", "end": "Uttara", "fare": 30 }
+    ]
+  }
+  
