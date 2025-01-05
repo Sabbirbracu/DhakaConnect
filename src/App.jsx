@@ -6,7 +6,8 @@ import DriverDashboard from './pages/DriverDashboard'; // Import DriverDashboard
 import DriverRegistrationPage from './pages/DriverRegistrationPage'; // Import DriverRegistrationPage
 import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
-import RoutePage from './pages/Routepage';
+import UserRide from './pages/UserRide'; // Import the new UserRide page
+
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem('auth_token') ? true : false
@@ -58,9 +59,11 @@ const App = () => {
         />
 
         <Route
-            path="/routes"
-            element={isLoggedIn ? <RoutePage /> : <Navigate to="/" />}
-        />
+                    path="/ride"
+                    element={
+                        isLoggedIn ? <UserRide /> : <Navigate to="/" /> // Protect the route
+                    }
+                />
         
       </Routes>
     </Router>
