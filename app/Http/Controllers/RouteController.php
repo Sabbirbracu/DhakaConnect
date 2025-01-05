@@ -805,3 +805,218 @@ class RouteController extends Controller
         return null;
     }
 }
+
+// namespace App\Http\Controllers;
+
+// use App\Models\Route;
+// use App\Models\Location;
+// use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Cache;
+// use Illuminate\Support\Facades\Log;
+
+// class RouteController extends Controller
+// {
+//     // Get the shortest route
+//     public function getShortestRoute(Request $request)
+//     {
+//         set_time_limit(300);
+//         Log::info('Shortest route API called.');
+
+//         $startName = 'Badda'; // Starting point
+//         $endName = $request->input('destination'); // Destination input
+
+//         Log::info('Destination received:', ['endName' => $endName]);
+
+//         if (!$endName) {
+//             Log::error('Destination not provided.');
+//             return response()->json(['error' => 'Destination not provided'], 400);
+//         }
+
+//         $startLocation = Location::where('name', $startName)->first();
+//         $endLocation = Location::where('name', $endName)->first();
+
+//         Log::info('Start and End locations:', [
+//             'startLocation' => $startLocation,
+//             'endLocation' => $endLocation,
+//         ]);
+
+//         if (!$startLocation || !$endLocation) {
+//             Log::error('Start or destination not found in the database.');
+//             return response()->json(['error' => 'Start or destination not found in the database'], 404);
+//         }
+
+//         try {
+//             $graph = $this->buildGraph();
+//             Log::info('Graph successfully built.');
+
+//             if (!isset($graph[$startLocation->id])) {
+//                 Log::error('Starting location not found in the graph.', ['start_id' => $startLocation->id]);
+//                 return response()->json(['error' => 'Starting location not found in the graph'], 404);
+//             }
+
+//             if (!$this->isDestinationInGraph($graph, $endLocation->id)) {
+//                 Log::error('Destination is not reachable from Badda.', ['end_id' => $endLocation->id]);
+//                 return response()->json(['error' => 'Destination is not reachable from Badda'], 404);
+//             }
+
+//             $result = $this->dijkstra($graph, $startLocation->id, $endLocation->id);
+
+//             if (empty($result['path']) || $result['distance'] === INF) {
+//                 Log::error('No valid path found between locations.');
+//                 return response()->json(['error' => 'No valid path found between locations'], 404);
+//             }
+
+//             Log::info('Shortest path calculation successful:', $result);
+//             return response()->json($result);
+
+//         } catch (\Exception $e) {
+//             Log::error('An error occurred:', ['exception' => $e->getMessage()]);
+//             return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
+//         }
+//     }
+
+//     // Build graph for route data
+//     private function buildGraph()
+//     {
+//         Log::info('Building graph...');
+//         $routes = Route::with(['startLocation', 'endLocation'])->get();
+//         $graph = [];
+
+//         if ($routes->isEmpty()) {
+//             Log::error('No routes available in the database.');
+//             throw new \Exception('No routes available in the database.');
+//         }
+
+//         foreach ($routes as $route) {
+//             if (!$route->startLocation || !$route->endLocation) {
+//                 Log::error('Route missing start or end location:', [
+//                     'route_id' => $route->id,
+//                     'start_location' => $route->start_location_id,
+//                     'end_location' => $route->end_location_id,
+//                 ]);
+//                 continue;
+//             }
+
+//             $startId = $route->startLocation->id;
+//             $endId = $route->endLocation->id;
+
+//             if (!isset($graph[$startId])) {
+//                 $graph[$startId] = [];
+//             }
+
+//             $graph[$startId][$endId] = [
+//                 'distance' => (float)$route->distance,
+//                 'fare' => (float)$route->fare,
+//                 'buses' => explode(', ', $route->buses),
+//             ];
+//         }
+
+//         Log::info('Graph built successfully:', $graph);
+
+//         file_put_contents(storage_path('logs/graph_debug.log'), json_encode($graph, JSON_PRETTY_PRINT));
+
+//         return $graph;
+//     }
+
+//     // Check if destination is in graph
+//     private function isDestinationInGraph($graph, $end)
+//     {
+//         foreach ($graph as $edges) {
+//             if (isset($edges[$end])) {
+//                 return true;
+//             }
+//         }
+
+//         return isset($graph[$end]);
+//     }
+
+//     // Dijkstra's algorithm for shortest path
+//     private function dijkstra($graph, $start, $end)
+//     {
+//         Log::info('Running Dijkstra algorithm.', ['start' => $start, 'end' => $end]);
+
+//         $dist = [];
+//         $prev = [];
+//         $queue = new \SplPriorityQueue();
+//         $visited = [];
+
+//         foreach ($graph as $node => $edges) {
+//             $dist[$node] = INF;
+//             $prev[$node] = null;
+//             $visited[$node] = false;
+//         }
+
+//         $dist[$start] = 0;
+//         $queue->insert($start, 0);
+
+//         while (!$queue->isEmpty()) {
+//             $current = $queue->extract();
+
+//             if ($visited[$current]) {
+//                 continue;
+//             }
+
+//             $visited[$current] = true;
+
+//             if (!isset($graph[$current])) {
+//                 continue;
+//             }
+
+//             foreach ($graph[$current] as $neighbor => $data) {
+//                 $alt = $dist[$current] + $data['distance'];
+//                 if ($alt < $dist[$neighbor]) {
+//                     $dist[$neighbor] = $alt;
+//                     $prev[$neighbor] = $current;
+//                     $queue->insert($neighbor, -$alt);
+//                 }
+//             }
+//         }
+
+//         $path = [];
+//         $current = $end;
+
+//         while ($current && isset($prev[$current])) {
+//             array_unshift($path, $current);
+//             $current = $prev[$current];
+//         }
+
+//         if ($current !== $start) {
+//             Log::error('No path found between start and end.', ['start' => $start, 'end' => $end]);
+//             return [
+//                 'path' => [],
+//                 'distance' => INF,
+//                 'fare' => 0,
+//                 'buses' => [],
+//             ];
+//         }
+
+//         array_unshift($path, $start);
+//         Log::info('Dijkstra completed successfully.', ['path' => $path]);
+
+//         return [
+//             'path' => $this->convertPathToNames($path),
+//             'distance' => $dist[$end] === INF ? 0 : $dist[$end],
+//             'fare' => $dist[$end] === INF ? 0 : $dist[$end] * 5,
+//             'buses' => $this->extractBusDetails($path, $graph),
+//         ];
+//     }
+
+//     private function convertPathToNames($path)
+//     {
+//         return Location::whereIn('id', $path)->pluck('name')->toArray();
+//     }
+
+//     private function extractBusDetails($path, $graph)
+//     {
+//         $buses = [];
+//         for ($i = 0; $i < count($path) - 1; $i++) {
+//             $current = $path[$i];
+//             $next = $path[$i + 1];
+
+//             if (isset($graph[$current][$next])) {
+//                 $buses[$next] = $graph[$current][$next]['buses'];
+//             }
+//         }
+//         return $buses;
+//     }
+// }
