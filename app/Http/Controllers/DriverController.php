@@ -87,7 +87,6 @@ class DriverController extends Controller
             'password' => $request->password,
             'role' => 'driver',
         ]);
-
         // Create the driver record
         Driver::create([
             'user_id' => $user->id,
@@ -103,7 +102,7 @@ class DriverController extends Controller
             'color' => $request->color,
             'license_plate' => $request->license_plate, // Add this
         ]);
-
+        
         return response()->json(['message' => 'Driver registered successfully'], 201);
     }
 

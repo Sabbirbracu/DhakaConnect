@@ -60,22 +60,19 @@ class AuthController extends Controller
                 'email'    => 'required|email',
                 'password' => 'required',
             ]);
-
             $user = User::where('email', $request->email)->first();
-
             if (!$user) {
                 return response()->json([
                     'message' => 'User with this email does not exist.',
                 ], 404);
             }
-
             if ($request->password !== $user->password) {
                 return response()->json([
                     'message' => 'Incorrect password. Please try again.',
                 ], 401);
             }
-            
 
+            
             $token = $user->createToken('auth_token')->plainTextToken;
 
             return response()->json([
